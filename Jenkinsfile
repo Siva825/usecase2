@@ -30,7 +30,7 @@
         stage('vm creation using Terraform') {
             steps {
                 echo "********** VM creation is done ************"
-                dir('/var/lib/jenkins/workspace/usecase2') {
+                dir('usecase2') {
                     sh 'terraform init'
                     sh 'terraform destroy --auto-approve'
                     sh 'terraform apply --auto-approve'  
