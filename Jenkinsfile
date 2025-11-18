@@ -15,15 +15,15 @@ pipeline {
             steps {  
                 echo "********** building is done ************"  
                 dir('usecase2') {  
-                    sh 'docker build -t siva2626/springpetclinic1:v1 .'  
+                    sh 'sudo docker build -t siva2626/springpetclinic1:v1 .'  
                 }  
             }  
         }
         stage('Push to Docker Hub') {  
             steps {  
                 sh """  
-                docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}  
-                docker push siva2626/springpetclinic1:v1  
+                sudo docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}  
+                sudo docker push siva2626/springpetclinic1:v1  
                 """  
             }  
         }
