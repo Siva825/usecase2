@@ -2,6 +2,7 @@
     project = "siva-477505" 
     credentials = file("/var/lib/jenkins/a.json")
 }
+
 resource "google_compute_instance" "instance1" {
     name = "vm-1-java"
     zone =  "us-west1-b" 
@@ -17,16 +18,24 @@ resource "google_compute_instance" "instance1" {
            //
         }
     }
-    metadata = {
-      ssh-keys = "sivapk188:${file("/var/lib/jenkins/.ssh/id_ed25519.pub")}"
-    }
+    metadata_startup_script = <<-EOT
+        sudo apt-get update
+        sudo apt-get install \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg \
+        lsb-release -y
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+        echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+        sudo apt-mark hold docker-ce
+        sudo rm /etc/containerd/config.toml
+        sudo systemctl restart containerd
+    EOT
 }
 
-output "vm_external_ip" {
-  value = google_compute_instance.instance1.network_interface[0].access_config[0].nat_ip
-}
-
-resource "local_file" "file1" {
-  content  = "sivapk188@${google_compute_instance.instance1.network_interface[0].access_config[0].nat_ip}"
-  filename = "/var/lib/jenkins/workspace/java-vm-ip.txt"
-}
