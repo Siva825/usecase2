@@ -8,7 +8,7 @@
             steps {  
                 echo "*********** cloning the code **********"  
                 sh 'rm -rf usecase2 || true'  
-                sh 'git clone https://github.com/Siva825/usecase2.git' 
+                sh 'git clone -b feature https://github.com/Siva825/usecase2.git' 
             }  
         }   
         stage('Docker image build') {  
