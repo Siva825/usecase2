@@ -1,4 +1,4 @@
-pipeline {  
+ pipeline {  
     agent any  
     environment {  
         DOCKERHUB_CREDENTIALS = credentials('docker-creds')  
@@ -14,7 +14,7 @@ pipeline {
         stage('Docker image build') {  
             steps {  
                 echo "********** building is done ************"  
-                dir('usecase2') {  
+                dir('usecase2/python') {  
                     sh 'docker build -t siva2626/flask2:v1 .'  
                 }  
             }  
@@ -30,7 +30,7 @@ pipeline {
         stage('vm creation using Terraform') {
             steps {
                 echo "********** VM creation is done ************"
-                dir('usecase2') {
+                dir('/var/lib/jenkins/workspace/usecase5') {
                     sh 'terraform init'
                     sh 'terraform destroy --auto-approve'
                     sh 'terraform apply --auto-approve'  
