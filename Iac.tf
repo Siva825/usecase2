@@ -1,9 +1,9 @@
- provider "google" {
+provider "google" {
     project = "siva-477505" 
     credentials = file("/var/lib/jenkins/a.json")
 }
 
-resource "google_compute_instance" "instance2" {
+resource "google_compute_instance" "instance1" {
     name = "vm-2-python"
     zone =  "us-west1-b" 
     machine_type = "e2-micro"
@@ -34,10 +34,9 @@ resource "google_compute_instance" "instance2" {
         sudo apt-get update
         sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
         sudo apt-mark hold docker-ce
-        sudo usermod -aG docker sivapk188
-        sudo rm /etc/containerd/config.toml
-        sudo systemctl restart containerd
-        docker pull siva2626/flask2:v1
-        docker run -d -p 91:5000 siva2626/flask2:v1
+        sudo systemctl enable docker
+        sudo systemctl start docker 
+        sudo docker pull siva2626/flask2:v1
+        sudo docker run -d -p 91:5000 siva2626/flask2:v1
     EOT
 }
