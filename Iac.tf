@@ -18,6 +18,10 @@ resource "google_compute_instance" "instance1" {
            //
         }
     }
+    metadata = {
+        ssh-keys = "sivapk188:${file("/var/lib/jenkins/.ssh/id_ed25519.pub")}" 
+    }
+
     metadata_startup_script = <<-EOT
         sudo apt-get update
         sudo apt-get install \
@@ -38,4 +42,3 @@ resource "google_compute_instance" "instance1" {
         sudo systemctl restart containerd
     EOT
 }
-
