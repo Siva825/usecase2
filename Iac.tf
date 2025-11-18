@@ -18,9 +18,6 @@ resource "google_compute_instance" "instance1" {
            //
         }
     }
-    metadata = {
-        ssh-keys = "sivapk188:${file("/var/lib/jenkins/.ssh/id_ed25519.pub")}" 
-    }
     metadata_startup_script = <<-EOT
         sudo apt-get update
         sudo apt-get install \
@@ -37,7 +34,10 @@ resource "google_compute_instance" "instance1" {
         sudo apt-get update
         sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
         sudo apt-mark hold docker-ce
+        sudo usermod -aG docker sivapk188
         sudo rm /etc/containerd/config.toml
         sudo systemctl restart containerd
+        docker pull siva2626/flask2:v1
+        docker run -d -p 91:5000 siva2626/flask2:v1
     EOT
 }
