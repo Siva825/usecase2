@@ -3,7 +3,7 @@
     credentials = file("/var/lib/jenkins/a.json")
 }
 
-resource "google_compute_instance" "instance1" {
+resource "google_compute_instance" "instance2" {
     name = "vm-2-python"
     zone =  "us-west1-b" 
     machine_type = "e2-micro"
