@@ -1,4 +1,4 @@
-provider "google" {
+ provider "google" {
     project = "siva-477505" 
     credentials = file("/var/lib/jenkins/a.json")
 }
@@ -38,7 +38,6 @@ resource "google_compute_instance" "instance1" {
         sudo systemctl enable docker
         sudo systemctl start docker
         sleep 30
-        sudo -u sivapk188
         sudo docker pull siva2626/springpetclinic1:v1
         sudo docker run -d -p 90:8080 siva2626/springpetclinic1:v1
     EOT
