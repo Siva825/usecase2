@@ -8,13 +8,13 @@
             steps {  
                 echo "*********** cloning the code **********"  
                 sh 'rm -rf usecase2 || true'  
-                sh 'git clone -b feature https://github.com/Siva825/usecase2/python.git' 
+                sh 'git clone -b feature https://github.com/Siva825/usecase2.git' 
             }  
         }   
         stage('Docker image build') {  
             steps {  
                 echo "********** building is done ************"  
-                dir('usecase2/python') {  
+                dir('usecase2') {  
                     sh 'docker build -t siva2626/flask2:v1 .'  
                 }  
             }  
