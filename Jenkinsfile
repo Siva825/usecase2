@@ -30,7 +30,7 @@ pipeline {
         stage('vm creation using Terraform') {
             steps {
                 echo "********** VM creation is done ************"
-                dir('/var/lib/jenkins/workspace/usecase5') {
+                dir('usecase2') {
                     sh 'terraform init'
                     sh 'terraform apply --auto-approve'  
                 }
